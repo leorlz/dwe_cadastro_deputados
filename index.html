@@ -11,7 +11,124 @@
     </head>
 
     <body>
-
+        <div class='container-fluid'>
+            <div class='row mt-3'>
+                <div class='col-sm-7'>
+                    <div class='card'>
+                        <div class='card header p-2'>
+                            <div class='row'>
+                                <div class='col-sm-9'>
+                                    <h5>Informações do Candidato</h5>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <button>Novo Candidato</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='card body p-2'>
+                            <form>
+                                <div class='form-row'>
+                                    <div class='col'>
+                                        <label for='detailsName'>Nome completo</label>
+                                        <input type='text' class='form-control' id='detailsName'>
+                                        <p id='validName' style="display: none">O Nome não deve exceder 255 caracteres</p>
+                                    </div>
+                                    <div class='col'>
+                                        <p>Sexo</p>
+                                        <div class='form-check form-check-inline'>
+                                            <input class='form-check-input' type='radio' id='inlineRadioMasc' value='masculino'>
+                                            <label class='form-check-label' for='inlineRadioMasc'>Masculino</label>
+                                        </div>
+                                        <div class='form-check form-check-inline'>
+                                            <input class='form-check-input' type='radio' id='inlineRadioFem' value='feminino'>
+                                            <label class='form-check-label' for='inlineRadioFem'>Feminino</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='form-row'>
+                                    <div class='col'>
+                                        <label for='detaisDataNasc'>Data de Nascimento</label>
+                                        <input type='date' class='form-control' id='detailsDataNasc'>
+                                        <p id='validAge' style="display: none">O Candidato deve ser maior de 18 anos</p>
+                                    </div>
+                                    <div class='col'>
+                                        <label for="detailsEmail">E-mail</label>
+                                        <input type="email" class="form-control" id="detailsEmail" placeholder="nome@exemplo.com">
+                                        <p id='validEmail' style="display: none">Não pode ser deixado vazio!</p>
+                                    </div>
+                                </div>
+                                <div class='form-row'>
+                                    <div class='col'>
+                                        <label for='detailsCPF'>CPF</label>
+                                        <input type='number' class='form-control' id='detailsCPF'>
+                                        <small id='cpfHelp' class='form-text text-muted'>
+                                            Apenas números.
+                                        </small>
+                                        <p id='validCPF' style="display: none">Insira um CPF válido!</p>
+                                    </div>
+                                    <div class='col'>
+                                        <label for="detailsCadJus">Número de Cadastro na Justiça Eleitoral</label>
+                                        <input type="number" class="form-control" id="detailsCadJus">
+                                        <small id='cadJusHelp' class='form-text text-muted'>
+                                            Apenas números.
+                                        </small>
+                                        <p id='validCadJus' style="display: none">Deve ser um número entre 1 e 5000</p>
+                                    </div>
+                                </div>
+                                <div class='form-row'>
+                                    <div class='col'>
+                                        <label for='detailsSenha'>Senha</label>
+                                        <input type='password' class='form-control' id='detailsSenha'>
+                                    </div>
+                                    <div class='col'>
+                                        <label for='detailsSenhaC'>Confirme sua Senha</label>
+                                        <input type='password' class='form-control' id='detailsSenhaC'>
+                                    </div>
+                                </div>
+                                <p id='validPass' style="display: none">Senha e Confirmação são diferentes.</p>
+                                <br>
+                                <h5>Endereço</h5>
+                                <div class='form-row'>
+                                    <div class='col-sm-10'>
+                                        <label for='detailsRua'>Rua</label>
+                                        <input type='text' class='form-control' id='detailsRua'>
+                                    </div>
+                                    <div class='col-sm-2'>
+                                        <label for='detailsNumero'>Número</label>
+                                        <input type='number' class='form-control' id='detailsNumero'>
+                                    </div>
+                                </div>
+                                <div class='form-row'>
+                                    <div class='col'>
+                                        <label for='detailsBairro'>Bairro</label>
+                                        <input type='text' class='form-control' id='detailsBairro'>
+                                    </div>
+                                    <div class='col'>
+                                        <label for='detailsCidade'>Cidade</label>
+                                        <select class='custom-select' id='detailsCidade'>
+                                        </select>
+                                    </div>
+                                    <div class='col'>
+                                        <label for='detailsEstado'>Estado</label>
+                                        <select class='custom-select' id='detailsEstado'>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-sm-5'>
+                    <div class='card'>
+                        <div class='card header'>
+                            <h5>Candidatos</h5>
+                        </div>
+                    </div>
+                        <br>
+                    <button disabled data-toggle="tooltip" title="Excluir candidato selecionado">Excluir</button>
+                    <button data-toggle="tooltip" title="Cadastrar novo candidato ou salvar alterações no candidato selecionado">Salvar</button>
+                </div>
+            </div>
     
         <footer>
             <p>Licensa MIT</p>
@@ -24,6 +141,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
         <!--Loading custom js --!>
-        <script src='./js/index.js'></script>
+        <script src='./js/deputados.js'></script>
     </body>
 </html>
