@@ -21,7 +21,7 @@
                                     <h5>Informações do Candidato</h5>
                                 </div>
                                 <div class='col-sm-3'>
-                                    <button>Novo Candidato</button>
+                                    <button id='btn_novocand'>Novo Candidato</button>
                                 </div>
                             </div>
                         </div>
@@ -123,10 +123,24 @@
                         <div class='card header'>
                             <h5>Candidatos</h5>
                         </div>
+                        <div class='card body'>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>CadJus</th>
+                                        <th>Idade</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='listaCand'>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                         <br>
-                    <button disabled data-toggle="tooltip" title="Excluir candidato selecionado">Excluir</button>
-                    <button data-toggle="tooltip" title="Cadastrar novo candidato ou salvar alterações no candidato selecionado">Salvar</button>
+                    <button id='btn_excluir' disabled data-toggle="tooltip" title="Excluir candidato selecionado">Excluir</button>
+                    <button id='btn_salvar' data-toggle="tooltip" title="Cadastrar novo candidato ou salvar alterações no candidato selecionado">Salvar</button>
                 </div>
             </div>
 

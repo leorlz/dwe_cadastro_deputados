@@ -2,11 +2,98 @@ $(document).ready(()=>{
     console.log('JQuery loaded');
      $('[data-toggle="tooltip"]').tooltip();
 
+    let novoCandidato = true;
+
+    let activeID = null;
+
     let validName = false;
     let validAge = false;
     let validCPF = false;
     let validCadJus = false;
     let validPass = false;
+
+
+    //Carregar candidatos do backend;
+function carregarBack(){
+    $('#listaCand').empty();
+    $.get("http://andrebordignon.esy.es/php/consultacandidatos.php", (data, status) => {
+        if (status == 'success'){
+            json = JSON.parse(data);
+            console.log(json);
+            for (let i=0; i<json.length; i++){
+                let cand = json[i];
+                let cTR = ('<tr id="'+cand.idcandidato+'">'
+                    +'<td>'+cand.nome+'</td>'
+                    +'<td>'+cand.cadjus+'</td>'
+                    +'<td>'+calculaIdade(cand.datanasc)+'</td>'
+                    +'</tr>')
+                $('#listaCand').append(cTR);
+                $('#'+cand.idcandidato).click(()=>{
+                    novoCandidato = false;
+                    activeID = (cand.idcandidato);
+                    $('#btn_excluir').prop("disabled",false);
+                    $('#detailsName').val(cand.nome);
+                    $('#detailsDataNasc').val(cand.datanasc);
+                    $('#detailsEmail').val(cand.email);
+                    $('#detailsCPF').val(cand.cpf);
+                    $('#detailsCadJus').val(cand.cadjus);
+                    $('#detailsSenha').val(cand.senha);
+                    $('#detailsSenhaC').val(cand.senha);
+                    $('#detailsRua').val(cand.rua);
+                    $('#detailsNumero').val(cand.numero);
+                    $('#detailsBairro').val(cand.bairro);
+                    $('#detailsCidade').val(cand.cidade);
+                    $('#detailsEstado').val(cand.estado);
+                });
+            }
+        }
+    });
+}
+
+    //novo candidato
+    $('#btn_novocand').click(()=>{
+        setNew();
+    });
+
+    //salvar alterações
+$('#btn_salvar').click(()=>{
+    console.log("click on save");
+    let cand = {}
+    cand.nome = $('#detailsName').val();
+    cand.dataNasc = $('#detailsDataNasc').val();
+    cand.email = $('#detailsEmail').val();
+    cand.cpf = $('#detailsCPF').val();
+    cand.cadjus = $('#detailsCadJus').val();
+    cand.senha = $('#detailsSenha').val();
+    cand.rua = $('#detailsRua').val();
+    cand.numero = $('#detailsNumero').val();
+    cand.bairro = $('#detailsBairro').val();
+    cand.cidade = $('#detailsCidade').val();
+    cand.estado = $('#detailsEstado').val();
+    if (validName &&
+        validAge &&
+        validCPF &&
+        validCadJus &&
+        validPass)
+    {
+        if (novoCandidato){
+            //Salvar novo candidato
+            console.log("antes do post");
+            $.post('http://andrebordignon.esy.es/php/incluicandidato.php',
+                cand,
+                (data, status) => {
+                    if (status == 'success'){
+                        setNew();
+                        carregarBack();
+                    }
+                }
+            );
+        }
+        else {
+            //salvar alterações no candidato existente
+        }
+    }
+});
 
     $('#detailsName').change(()=>{
         validateName(); 
@@ -28,6 +115,33 @@ $(document).ready(()=>{
 		validatePass();
 	});
 
+//Helpers
+    function calculaIdade(idadeString){
+        let dataNasc = new Date(idadeString);
+        let today = new Date();
+        let ageDate = new Date(today-dataNasc);
+        let age = ageDate.getUTCFullYear() - 1970;
+        return age;
+    }
+
+    function setNew(){
+        novoCandidato = true;
+        activeID = null;
+        $('#btn_excluir').prop("disabled",true);
+        $('#detailsName').val('');
+        $('#detailsDataNasc').val('');
+        $('#detailsEmail').val('');
+        $('#detailsCPF').val('');
+        $('#detailsCadJus').val('');
+        $('#detailsSenha').val('');
+        $('#detailsSenhaC').val('');
+        $('#detailsRua').val('');
+        $('#detailsNumero').val('');
+        $('#detailsBairro').val('');
+        $('#detailsCidade').val('');
+        $('#detailsEstado').val('');
+    }
+
 
 //Validations
     function validateName(){
@@ -44,10 +158,7 @@ $(document).ready(()=>{
 
     function validateAge(){
         let dataNasc = $('#detailsDataNasc').val();
-        dataNasc = new Date(dataNasc);
-        let today = new Date();
-        let ageDate = new Date(today-dataNasc);
-        let age = ageDate.getUTCFullYear() - 1970;
+        let age = calculaIdade(dataNasc);
         if (age<18){
             $('#validAge').css({"color":"red",  "display":"inherit"});
             validAge = false;
@@ -114,4 +225,6 @@ $(document).ready(()=>{
 		}
 	}
 
+    carregarBack();
 });
+
