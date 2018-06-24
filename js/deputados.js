@@ -19,7 +19,6 @@ function carregarBack(){
     $.get("http://andrebordignon.esy.es/php/consultacandidatos.php", (data, status) => {
         if (status == 'success'){
             json = JSON.parse(data);
-            console.log(json);
             for (let i=0; i<json.length; i++){
                 let cand = json[i];
                 let cTR = ('<tr id="'+cand.idcandidato+'">'
@@ -44,6 +43,7 @@ function carregarBack(){
                     $('#detailsBairro').val(cand.bairro);
                     $('#detailsCidade').val(cand.cidade);
                     $('#detailsEstado').val(cand.estado);
+                    validateAll();
                 });
             }
         }
@@ -57,7 +57,6 @@ function carregarBack(){
 
     //salvar alterações
 $('#btn_salvar').click(()=>{
-    console.log("click on save");
     let cand = {}
     cand.nome = $('#detailsName').val();
     cand.dataNasc = $('#detailsDataNasc').val();
@@ -78,7 +77,6 @@ $('#btn_salvar').click(()=>{
     {
         if (novoCandidato){
             //Salvar novo candidato
-            console.log("antes do post");
             $.post('http://andrebordignon.esy.es/php/incluicandidato.php',
                 cand,
                 (data, status) => {
@@ -91,6 +89,15 @@ $('#btn_salvar').click(()=>{
         }
         else {
             //salvar alterações no candidato existente
+            $.post('http://andrebordignon.esy.es/php/atualizacandidato.php',
+                cand,
+                (data, status) => {
+                    if (status == 'success'){
+                        carregarBack();
+                        setNew();
+                    }
+                }
+            );
         }
     }
 });
@@ -144,9 +151,16 @@ $('#btn_salvar').click(()=>{
 
 
 //Validations
+    function validateAll(){
+        validateName();
+        validateAge();
+        validateCadJus();
+        validateCPF();
+        validatePass();
+    }
+
     function validateName(){
         let name = $('#detailsName').val();
-        console.log(name.length);
         if(name.length>255 || name.length<=0){
             $('#validName').css({"color":"red",  "display":"inherit"});
             validName = false;
