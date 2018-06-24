@@ -89,9 +89,12 @@ $('#btn_salvar').click(()=>{
         }
         else {
             //salvar alterações no candidato existente
+            cand.idcandidato = activeID;
             $.post('http://andrebordignon.esy.es/php/atualizacandidato.php',
                 cand,
                 (data, status) => {
+                    console.log(status);
+                    console.log(data);
                     if (status == 'success'){
                         carregarBack();
                         setNew();
@@ -99,8 +102,25 @@ $('#btn_salvar').click(()=>{
                 }
             );
         }
+    } else {
+        console.log("algo de errado não esta certo");
+        console.log(validName);
+        console.log(validAge);
+        console.log(validCPF);
+        console.log(validCadJus);
+        console.log(validPass);
     }
 });
+
+    $('#btn_excluir').click(()=>{
+        $.get('http://andrebordignon.esy.es/php/deletacandidato.php?id='+activeID,
+        (data, status) => {
+            if (status == 'success'){
+                setNew();
+                carregarBack();
+            }
+        });
+    });
 
     $('#detailsName').change(()=>{
         validateName(); 
